@@ -1,0 +1,16 @@
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(date 1554216785000)
++++ app/build.gradle	(date 1554216822342)
+@@ -8,7 +8,7 @@
+         applicationId "com.ultron.equalizer"
+         minSdkVersion 15
+         targetSdkVersion 26
+-        versionCode 3
++        versionCode 37
+         versionName '1.0.3'
+         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+         vectorDrawables.useSupportLibrary = true
