@@ -1,0 +1,81 @@
+package com.ultron.equalizer;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+
+import mehdi.sakout.aboutpage.AboutPage;
+import mehdi.sakout.aboutpage.Element;
+
+public class AboutActivity extends AppCompatActivity {
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if(sharedPreferences.getBoolean("dark_theme",false)){
+            setTheme(R.style.AppTheme_Dark);
+            // MainActivity.this.recreate();
+        }
+        else {
+            setTheme(R.style.AppTheme);
+            //MainActivity.this.recreate();
+        }
+        setContentView(R.layout.activity_about);
+        Toolbar toolbar =  findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = this.getSupportActionBar();
+        if(actionBar!=null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
+
+        Element license = new Element();
+        license.setTitle("Open Source Licenses");
+
+        license.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LicensesDialogFragment dialog = LicensesDialogFragment.newInstance();
+                dialog.show(getSupportFragmentManager(), "LicensesDialog");
+
+            }
+        });
+
+        Element privacyP = new Element();
+        privacyP.setTitle("Privacy Policy");
+        privacyP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://docs.google.com/document/d/1GoypBqSTuSi_h3k18q9xpnKA0itwb9LvV-izrsOzPOM/edit?usp=sharing";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+
+
+        View aboutPage = new AboutPage(this)
+                .isRTL(false)
+                .setImage(R.mipmap.ic_launcher_round).setDescription("Equalizer for all devices.").
+                addGroup("Contactos e Mais")
+                .addEmail("ultronsoftbr@hotmail.com")
+                .addPlayStore("com.ultron.equalizer")
+                .addItem(license).addItem(privacyP)
+                .create();
+        setContentView(aboutPage);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
+}
